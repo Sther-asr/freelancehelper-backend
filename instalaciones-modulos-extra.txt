@@ -1,0 +1,5 @@
+md5
+-> npm install md5
+
+plugin-transform-runtime
+-> npm install --save-dev @babel/plugin-transform-runtime

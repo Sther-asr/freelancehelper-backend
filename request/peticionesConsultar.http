@@ -1,0 +1,120 @@
+@api = http://localhost:2000
+
+### consulta todas personas
+GET {{api}}
+
+### datos inicio sesion
+POST {{api}}/usuarios/consulta-inicio-sesion
+Content-Type: application/json
+
+{
+    "usuario" : "Sther2000",
+    "contrasena" : "12345789"
+}
+
+### consulta datos persona_idPersona
+GET {{api}}/personas/consulta-datos
+Content-Type: application/json
+
+{
+    "sesion" : true,
+    "idSesion" : "3"
+}
+
+### consulta ingresos (Si no se pasa fechaInicio-fechaFin obtiene todos los ingresos)
+GET {{api}}/ingresos/consulta
+Content-Type: application/json
+
+{
+    "sesion" : true,
+    "idSesion" : "18",
+    "rangoInicio": "2022-08-27",
+    "rangoFin": "2022-09-30"
+}
+
+### consulta egresos (Si no se pasa fechaInicio-fechaFin obtiene todos los ingresos)
+GET {{api}}/egresos/consulta
+Content-Type: application/json
+
+{
+    "sesion" : true,
+    "idSesion" : "18",
+    "rangoInicio": "2022-08-19",
+    "rangoFin": "2022-09-30"
+}
+
+### consulta proyecto
+GET {{api}}/proyectos/consulta
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSesion" : "17"
+}
+
+### consulta proyecto_tags
+GET {{api}}/proyecto-tags/consulta
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idProyecto" : "8"
+}
+
+### consulta recordatorio  // si se agregan solo dos datos, la consulta trae todos los recordatorios
+GET {{api}}/recordatorio/consulta
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSesion" : "1",
+    "rangoInicio" : "2022-8-19",
+    "rangoFin": "2022-11-30"
+}
+
+### consulta recordatorio-tag
+GET {{api}}/recordatorio-tags/consulta
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idRecordatorio": "5"
+}
+
+### consulta recordatorio-tag
+GET {{api}}/tags/consulta
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idTag": "5"
+}
+
+### consulta actividad
+GET {{api}}/actividades/consulta
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idProyecto" : "8"
+}
+
+### consulta nota
+GET {{api}}/notas/consulta
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idActividad" : "3"
+}
+
+### Consulta tareas diarias
+POST {{api}}/consultas/tareasDiarias
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSession": 7,
+    "fechaFin" : "2022-08-25",
+    "estado": 1
+}

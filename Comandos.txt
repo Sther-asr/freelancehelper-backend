@@ -1,0 +1,90 @@
+##################################
+##### MODULOS DE PRODUCCION ######
+##################################
+# crea un archivo Jhoson para especificar las dependencias que tendra la aplicacion
+-> npm init -y
+
+##################################
+#### modulo de conexion     ######
+##################################
+
+# instalar librerias para utilizar la base de datos con mysql (modulo de conexion)
+# crear consultas, registrar consultas, promesas, etc... Utilizando "express"
+-> npm i express mysql2
+
+# instalar libreria para visualizar por onsla las consultas que van llegando
+-> npm i express morgan
+
+# instalar librerias para consultar los modulos y dispositivos que puedan conectarse al backend actual
+-> npm i express cors
+
+# instalar librerias para documentacion
+# la primera sirve para configurar el modulos
+-> npm i swagger-jsdoc
+# el segundo sirve para ver toda la documentacion a traves de una interfaz grafica
+-> npm i swagger-ui-express 
+
+# instalar librerias para crear variables de entorno
+-> npm i dotenv
+
+# instalar librerias todas en una linea
+-> npm i express mysql2 morgan cors swagger-jsdoc swagger-ui-express dotenv
+
+
+##################################
+### MODULOS PARA DESARROLLO ######
+##################################
+
+# instalar librerias para reiniciar codigo e el servidor cada vez que se cambie
+-> npm i nodemon
+
+# instalar librerias para utilizar caracteristias modernas que permite NodeJs (convertir codigo)
+-> npm i @babel/core
+# permite utilizar comandos desde consola
+-> npm i @babel/cli
+# especifica convertir codigo moderno a viejo o menos actual
+-> npm i @babel/preset-env
+# poder ejecutar el codigo a traves de node y ejecutarlo a traves de babel
+-> npm i @babel/node
+
+# instalar librerias todas en una linea ("-D" especifica que son dependecias de desarrollo)
+-> npm i nodemon @babel/core @babel/cli @babel/preset-env @babel/node -D
+
+
+
+################################
+#### notas extras         ######
+################################
+# para la configuracion del comando de babel para convertir codigo "package.json" dio error con (nodemon src --exec babel-node)
+# se sustituyo por lo siguiente
+-> "babel-node":"babel-node --presets=@babel/preset-env",
+-> "dev": "nodemon --exec npm run babel-node src/index.js"
+# en conclusion solo faltaba la configuracion para "babel-node"
+
+
+################################
+### plugin y mas necesario  ####
+################################
+# instalar REST Client (Para realizar peticiones)
+
+
+
+################################
+### informacion de archivos ####
+################################
+# El archivo '.env' contiene las variables de entorno con los datos necesarios para guardar informacion privilegiada
+# El archivo '.bebelrc' contiene lo necesario para que babel se enargue de convertir el codigo
+# El archivo 'config' contiene la informacion para conecatrse a la base de datos
+# El archivo '.gitignore' contiene los nombres de los archivos que no se deben subir a github
+
+
+################################
+### modulo swagger           ###
+################################
+# Para crear la pagina web que contiene la informacion se usa swaggerUI
+# Para documentar las lineas de codigo hay que declarar entre comentarios la palabra '@swagger'
+  -> /*@swagger*/
+# Para agrupar las rutas en la dcumentacion se utiliza la palabra 'tags' esta misma tiene varias obciones para agregarle
+  -> tags:
+  ->   name: tasks
+  ->   description: Descripcion de la  ruta
