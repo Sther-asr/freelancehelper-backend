@@ -7,16 +7,15 @@ const date = require('date-and-time');
  * controladores actividad
  */
 export const consultaTareasDiarias = async (peticion, respuesta) => {
-  
+
   try {
+
     console.log("Realizando consulta diaria");
+    const date = require('date-and-time')
     const idPersona = parseInt(peticion.body.idSession);
     const objetoConexion = await conexion();
     const fecha = peticion.body.fechaFin;
-
-    const fechaAnterior = new Date(fecha);
-    const fechaasjhd = new Date(fechaAnterior)
-    fechaasjhd.setDate(fechaasjhd.getDate() + 1);
+    let fechaAnterior = date.format(new Date(fecha),'YYYY-MM-DD');
 
     let resultado;
     let resultado2;
@@ -24,8 +23,8 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
     //Actividades
     try {
         resultado = await objetoConexion.query(
-            "SELECT r.idRecordatorio, r.descripcion, r.fechaInicio, r.fechaFin, r.estado, r.persona_idPersona FROM recordatorio r WHERE ( DATE(r.fechaFIN) BETWEEN ? AND ?) AND estado = ? AND persona_idPersona = ?",
-            [fechaAnterior, fechaasjhd, peticion.body.estado, idPersona]
+            "SELECT r.idRecordatorio, r.descripcion, r.fechaInicio, r.fechaFin, r.estado, r.persona_idPersona FROM recordatorio r WHERE ( DATE(r.fechaFIN) BETWEEN ? AND ?) AND persona_idPersona = ?",
+            [fechaAnterior, peticion.body.fechaFin, idPersona]
         );
     } catch (e) {
         console.log('Error durante la consulta de Recordatorios\n'+e.message);
@@ -35,8 +34,8 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
     try {
       
       resultado2 = await objetoConexion.query(
-            "SELECT a.idActividad, a.descripcion, a.fechaInicio, a.fechaFin, a.estado, a.proyecto_idProyecto, p.idProyecto, p.persona_idPersona FROM actividad a JOIN proyecto p ON a.proyecto_idProyecto = p.idProyecto WHERE (DATE(a.fechaFIN) BETWEEN ? AND ?) AND a.estado = ? AND p.persona_idPersona= ?",
-            [fechaAnterior, fechaasjhd, peticion.body.estado, idPersona]
+            "SELECT a.idActividad, a.descripcion, a.fechaInicio, a.fechaFin, a.estado, a.proyecto_idProyecto, p.idProyecto, p.persona_idPersona FROM actividad a JOIN proyecto p ON a.proyecto_idProyecto = p.idProyecto WHERE (DATE(a.fechaFIN) BETWEEN ? AND ?) AND p.persona_idPersona= ?",
+            [fechaAnterior, peticion.body.fechaFin, idPersona]
         );
     } catch (e) {
         console.log('Error durante la consulta de Actividades\n'+e.message);
@@ -51,8 +50,9 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
       var dateB = new Date(b.fechaFin);
       return dateA - dateB;
     });
-    
-    //Formatear campos fechaFin/fechaInicio por 'YYYY-MM-DD HH:mm:ss'
+
+    // Formatear campos fechaFin/fechaInicio por 'YYYY-MM-DD HH:mm:ss'
+    //Y eliminar tareas viejas terminadas
     for(let i = 0; i < arrayTareas.length; i++){
       
       let fin = arrayTareas[i]["fechaFin"];
@@ -63,10 +63,15 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
 
       arrayTareas[i]["fechaFin"] = finNuevo;
       arrayTareas[i]["fechaInicio"] = inicioNuevo;
-    }
 
+      if((date.format(new Date(arrayTareas[i]["fechaFin"]),'YYYY-MM-DD')) 
+      < (fecha) && arrayTareas[i]["estado"] == 'Terminado'){
+
+        arrayTareas.splice(i, 1);
+      }
+     
+    }
     respuesta.json(arrayTareas)
-    console.log(arrayTareas);
    
   } catch (e) {
     console.log("Error durante la consulta\n" + e.message);
