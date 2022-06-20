@@ -91,9 +91,9 @@ CREATE TABLE IF NOT EXISTS recordatorio_tags(
 
 CREATE TABLE IF NOT EXISTS registros_ingresos(
     idIngreso INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    motivo VARCHAR(50),
-    monto FLOAT,
-    fecha DATETIME,
+    motivo VARCHAR(50) NOT NULL,
+    monto FLOAT NOT NULL,
+    fecha DATETIME NOT NULL,
     proyecto_idProyecto INT UNSIGNED NOT NULL,
     persona_idPersona INT UNSIGNED NOT NULL,
     
@@ -106,9 +106,9 @@ CREATE TABLE IF NOT EXISTS registros_ingresos(
 
 CREATE TABLE IF NOT EXISTS registros_egresos(
     idEgreso INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    motivo VARCHAR(50),
-    monto FLOAT,
-    fecha DATETIME,
+    motivo VARCHAR(50) NOT NULL,
+    monto FLOAT NOT NULL,
+    fecha DATETIME NOT NULL,
     persona_idPersona INT UNSIGNED NOT NULL,
     CONSTRAINT `fk_regegre_persona`
     FOREIGN KEY (persona_idPersona) REFERENCES persona(idPersona) ON DELETE CASCADE
