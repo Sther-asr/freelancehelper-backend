@@ -21,26 +21,38 @@ Content-Type: application/json
     "idSesion" : "3"
 }
 
-### consulta ingresos (Si no se pasa fechaInicio-fechaFin obtiene todos los ingresos)
-GET {{api}}/ingresos/consulta
+### consulta ingresos por tipo Mensual/ Anual
+POST {{api}}/ingresos/consulta
 Content-Type: application/json
 
 {
     "sesion" : true,
-    "idSesion" : "18",
-    "rangoInicio": "2022-08-27",
-    "rangoFin": "2022-09-30"
+    "idSession" : "3",
+    "tipo": "Anual", 
+    "fecha": "2022-08-27"
+}
+
+### consulta ingresos por rango
+POST {{api}}/ingresos/consulta/rango
+Content-Type: application/json
+
+{
+    "sesion" : true,
+    "idSession" : "7",
+    "fechaInicio": "2022-09-16",
+    "fechaFin": "2022-09-18"
 }
 
 ### consulta egresos (Si no se pasa fechaInicio-fechaFin obtiene todos los ingresos)
-GET {{api}}/egresos/consulta
+GET {{api}}/cuentas/consulta
 Content-Type: application/json
 
 {
     "sesion" : true,
     "idSesion" : "18",
-    "rangoInicio": "2022-08-19",
-    "rangoFin": "2022-09-30"
+    "tipo": 1,
+    "fechaInicio": "2022-08-19",
+    "fechaFin": "2022-09-30"
 }
 
 ### consulta proyecto
