@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": 1,
+    "idSession": 1,
     "nombrePersona":"NuevoNombre",
     "apellidoPersona":"NuevoApellido",
     "fechaNacimiento":"2005-10-03"
@@ -148,4 +148,16 @@ Content-Type: application/json
     "descripcion":"Nuevo motivo para nota",
     "idActividad":"3",
     "idNota":"2"
+}
+
+### Actualizar estado de las tareas diarias //"Actividad"/"Recordatorio"
+POST {{api}}/consultas/actualizarEstado
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSession": 7,
+    "id": 2,
+    "tipo": "Recordatorio",
+    "estado": "Terminado"
 }
