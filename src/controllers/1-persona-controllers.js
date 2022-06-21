@@ -33,8 +33,8 @@ export const registraPersona = async(peticion, respuesta)=>{
         try{
             console.log('Registrando persona');
             const contrasenaMD5 = md5(peticion.body.contrasena);
-            const [resultPersona] = await objetoConexion.query('INSERT INTO persona (nombrePersona, apellidoPersona, sexo, fechaNacimiento) VALUES (?,?,?,?)',
-                [peticion.body.nombrePersona, peticion.body.apellidoPersona, peticion.body.sexo, peticion.body.fechaNacimiento]
+            const [resultPersona] = await objetoConexion.query('INSERT INTO persona (nombrePersona, apellidoPersona, fechaNacimiento) VALUES (?,?,?)',
+                [peticion.body.nombrePersona, peticion.body.apellidoPersona, peticion.body.fechaNacimiento]
             );
             console.log('registro persona:\n'+[resultPersona]);
 

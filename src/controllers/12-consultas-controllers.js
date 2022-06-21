@@ -20,7 +20,7 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
     let resultado;
     let resultado2;
 
-    //Actividades
+    //Recordatorios
     try {
         resultado = await objetoConexion.query(
             "SELECT r.idRecordatorio, r.descripcion, r.fechaInicio, r.fechaFin, r.estado, r.persona_idPersona FROM recordatorio r WHERE ( DATE(r.fechaFIN) BETWEEN ? AND ?) AND persona_idPersona = ?",
@@ -30,7 +30,7 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
         console.log('Error durante la consulta de Recordatorios\n'+e.message);
     }
 
-    //Recordatorios
+    //Actividades
     try {
       
       resultado2 = await objetoConexion.query(
@@ -78,3 +78,26 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
     respuesta.json({ "Error durante la consulta": e.message });
   }
 };
+
+export const actualizarEstadoTareasDiarias = async (peticion, respuesta) => {
+  try {
+    console.log("Realizando consulta diaria");
+    const idPersona = parseInt(peticion.body.idSession);
+    const objetoConexion = await conexion();
+
+    if(peticion.body.tipo == "Recordatorio"){
+      const [resultado] = await objetoConexion.query("UPDATE recordatorio SET estado=? WHERE idRecordatorio=?", [peticion.body.estado,peticion.body.id]);
+    }
+
+    if(peticion.body.tipo == "Actividad"){
+      const [resultado] = await objetoConexion.query("UPDATE actividad SET estado=? WHERE idActividad=?", [peticion.body.estado,peticion.body.id]);
+    }
+
+    console.log({"registro":true});
+    respuesta.json({"registro":true});
+
+  } catch (e) {
+    console.log('Error al actualizar estado de tareas\n'+e.message);
+    respuesta.json({"tipo de Error":e.message});  
+  }
+}

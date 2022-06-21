@@ -39,7 +39,7 @@ export const consultaDatosSesionInicio = async (peticion, respuesta)=>{
         console.log(resultadoConteo[0].cantidad);
         // si hay usuarios retornar idUsuario
         if(resultadoConteo[0].cantidad == 1){
-            const [resultado] = await objetoConexion.query("SELECT idUsuario FROM usuario WHERE usuario = ? AND contrasena = ?",[peticion.body.usuario, contrasenaMD5]);
+            const [resultado] = await objetoConexion.query("SELECT persona_idPersona FROM usuario WHERE usuario = ? AND contrasena = ?",[peticion.body.usuario, contrasenaMD5]);
             console.log(resultado);
             respuesta.json(resultado);
         }else{

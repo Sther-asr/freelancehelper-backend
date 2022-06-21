@@ -14,7 +14,7 @@ router.get(`/`, function(req, res) {
     res.send('Hola mundo')
 });
 router.post(`/registro`, datosCorrectos, registraPersona);
-router.get(`/consulta-datos`, sesionExistente, consultaDatosPersona);
+router.post(`/consulta-datos`, sesionExistente, consultaDatosPersona);
 router.put(`/actualizar`,datosCorrectos, sesionExistente, actualizarPersona)
 router.delete(`/eliminar`, sesionExistente, elimiarPersona);
 
