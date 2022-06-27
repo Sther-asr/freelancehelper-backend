@@ -42,6 +42,7 @@ export const consultaDatosSesionInicio = async (peticion, respuesta)=>{
             const [resultado] = await objetoConexion.query("SELECT persona_idPersona FROM usuario WHERE usuario = ? AND contrasena = ?",[peticion.body.usuario, contrasenaMD5]);
             console.log(resultado);
             respuesta.json(resultado);
+            
         }else{
             console.log('No existe el usuario o los datos están equivocados');
             respuesta.json({"respuesta":"No existe el usuario o los datos están equivocados"});
@@ -56,7 +57,7 @@ export const actualizarUsuario = async (peticion, respuesta)=> {
     try{
         console.log('Ejecutando actualizacion');
         const objetoConexion = await conexion();
-        const idPersona = parseInt(peticion.body.idSesion);
+        const idPersona = parseInt(peticion.body.idSession);
         const contrasenaMD5 = md5(peticion.body.contrasena);
         const [resultado] = await objetoConexion.query(
             "UPDATE usuario SET usuario = ?, contrasena = ?, correo = ? WHERE persona_idPersona = ?",
@@ -80,10 +81,10 @@ export const actualizarContrasenaUsuario = async (peticion, respuesta)=> {
             [contrasenaMD5, peticion.body.correo]
         );
         console.log(resultado);
-        respuesta.json(resultado);
+        respuesta.json({"actualizacion": true, resultado});
     }catch (e) {
         console.log('Error al actualizar\n'+e.message);
-        respuesta.json({"Error durante la actualizacion": e.message});
+        // respuesta.json({"Error durante la actualizacion": e.message});
     }
 }
 
@@ -98,7 +99,7 @@ export const eliminarUsuario = async (peticion, respuesta) =>{
         console.log('Ejecutando eliminacion');
         const objetoConexion = await conexion();
         const contrasenaMD5 = md5(peticion.body.contrasena);
-        const idPersona = parseInt(peticion.body.idSesion);
+        const idPersona = parseInt(peticion.body.idSession);
         const [resultado]= await objetoConexion.query(
             "DELETE FROM usuario WHERE correo = ? AND contrasena = ? AND persona_idPersona =?",
             [peticion.body.correo, contrasenaMD5, idPersona]
