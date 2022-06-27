@@ -151,13 +151,13 @@ Content-Type: application/json
 }
 
 ### Actualizar estado de las tareas diarias //"Actividad"/"Recordatorio"
-POST {{api}}/consultas/actualizarEstado
+PUT {{api}}/consultas/actualizarEstado
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idSession": 7,
-    "id": 2,
+    "idSession": 4,
+    "id": "24",
     "tipo": "Recordatorio",
-    "estado": "Terminado"
+    "estado": "Activo"
 }

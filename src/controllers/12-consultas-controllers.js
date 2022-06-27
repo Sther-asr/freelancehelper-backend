@@ -81,18 +81,20 @@ export const consultaTareasDiarias = async (peticion, respuesta) => {
 
 export const actualizarEstadoTareasDiarias = async (peticion, respuesta) => {
   try {
-    console.log("Realizando consulta diaria");
+    console.log(`Realizando actualización de ${peticion.body.tipo}`);
     const idPersona = parseInt(peticion.body.idSession);
     const objetoConexion = await conexion();
-
+    console.log(peticion.body)
     if(peticion.body.tipo == "Recordatorio"){
-      const [resultado] = await objetoConexion.query("UPDATE recordatorio SET estado=? WHERE idRecordatorio=?", [peticion.body.estado,peticion.body.id]);
+      const [resultado] = await objetoConexion.query("UPDATE recordatorio SET estado=? WHERE idRecordatorio=?", [peticion.body.estado, peticion.body.id]);
+      console.log("R\n"+JSON.stringify(resultado));
     }
 
     if(peticion.body.tipo == "Actividad"){
-      const [resultado] = await objetoConexion.query("UPDATE actividad SET estado=? WHERE idActividad=?", [peticion.body.estado,peticion.body.id]);
+      const [resultado] = await objetoConexion.query("UPDATE actividad SET estado=? WHERE idActividad=?", [peticion.body.estado, peticion.body.id]);
+      console.log("A\n"+JSON.stringify(resultado));
     }
-
+    
     console.log({"registro":true});
     respuesta.json({"registro":true});
 
@@ -101,3 +103,80 @@ export const actualizarEstadoTareasDiarias = async (peticion, respuesta) => {
     respuesta.json({"tipo de Error":e.message});  
   }
 }
+
+
+export const consultaMovimientos = async (peticion, respuesta) => {
+  try {
+    console.log("Realizando consulta movimientos");
+    const objetoConexion = await conexion();
+    const idPersona = parseInt(peticion.body.idSession);
+    let resultado, resultadoIngresos, resultadoEgresos;
+
+    if (peticion.body.tipo == "Diario") {
+
+      [resultado] = await objetoConexion.query(
+        "SELECT motivo, monto, fecha, proyecto_idProyecto, persona_idPersona FROM registros_ingresos WHERE (DAY(fecha) = DAY(?)) AND persona_idPersona = ?",
+        [peticion.body.fecha, idPersona]
+      );
+
+    } else if (peticion.body.tipo == "Mensual") {
+
+      [resultadoIngresos] = await objetoConexion.query(
+        "SELECT * FROM registros_ingresos WHERE (MONTH(fecha) = MONTH(?)) AND persona_idPersona = ?",
+        [peticion.body.fecha, idPersona]
+      );
+      [resultadoEgresos] = await objetoConexion.query(
+        "SELECT * FROM registros_egresos WHERE (MONTH(fecha) = MONTH(?)) AND persona_idPersona = ?",
+        [peticion.body.fecha, idPersona]
+      );
+
+    } else if (peticion.body.tipo == "Anual") {
+
+      [resultadoIngresos] = await objetoConexion.query(
+        "SELECT * FROM registros_ingresos WHERE (YEAR(fecha) = YEAR(?)) AND persona_idPersona = ? ORDER BY fecha DESC",
+        [peticion.body.fecha, idPersona]
+      );
+      [resultadoEgresos] = await objetoConexion.query(
+        "SELECT * FROM registros_egresos WHERE (YEAR(fecha) = YEAR(?)) AND persona_idPersona = ? ORDER BY fecha DESC",
+        [peticion.body.fecha, idPersona]
+      );
+
+    } else if (peticion.body.tipo == "Rango") {
+
+      [resultadoIngresos] = await objetoConexion.query(
+        "SELECT * FROM registros_ingresos WHERE (fecha BETWEEN ? AND ? ) AND persona_idPersona = ?",
+        [peticion.body.fechaInicio, peticion.body.fechaFin, idPersona]
+      );
+      [resultadoEgresos] = await objetoConexion.query(
+        "SELECT * FROM registros_egresos WHERE (fecha BETWEEN ? AND ? ) AND persona_idPersona = ?",
+        [peticion.body.fechaInicio, peticion.body.fechaFin, idPersona]
+      );
+
+    }
+
+    resultado = resultadoIngresos.concat(resultadoEgresos);
+
+    //Ordenar objetos del array por fecha
+    resultado.sort(function compare(a, b) {
+      var dateA = new Date(a.fecha);
+      var dateB = new Date(b.fecha);
+      return dateA - dateB;
+    });
+    // formateando fechas con una funcion robada <3
+    for(let i = 0; i < resultado.length; i++){
+      let fecha = resultado[i]["fecha"];
+      const fechaNueva = date.format(fecha,'YYYY/MM/DD HH:mm');
+      resultado[i]["fecha"] = fechaNueva;     
+    }
+
+    //console.log(resultado);
+    respuesta.json(resultado);
+  } catch (e) {
+    console.log(
+      "Error durante la consulta de registros de ingresos\n" + e.message
+    );
+    respuesta.json({
+      "Error durante la consulta de registros de ingresos": e.message,
+    });
+  }
+};

@@ -130,3 +130,16 @@ Content-Type: application/json
     "fechaFin" : "2022-08-25",
     "estado": 1
 }
+
+
+### Consulta movimientos ingresos/egresos
+POST {{api}}/consultas/consultaMovimientos
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSession": 4,
+    "fechaInicio" : "2022-06-23",
+    "fechaFin" : "2022-06-27",
+    "tipo": "Rango"
+}
