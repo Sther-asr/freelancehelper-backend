@@ -114,8 +114,13 @@ export const consultaMovimientos = async (peticion, respuesta) => {
 
     if (peticion.body.tipo == "Diario") {
 
-      [resultado] = await objetoConexion.query(
-        "SELECT motivo, monto, fecha, proyecto_idProyecto, persona_idPersona FROM registros_ingresos WHERE (DAY(fecha) = DAY(?)) AND persona_idPersona = ?",
+      [resultadoIngresos] = await objetoConexion.query(
+        "SELECT * FROM registros_ingresos WHERE (DAY(fecha) = DAY(?)) AND persona_idPersona = ?",
+        [peticion.body.fecha, idPersona]
+      );
+
+      [resultadoEgresos] = await objetoConexion.query(
+        "SELECT * FROM registros_egresos WHERE (DAY(fecha) = DAY(?)) AND persona_idPersona = ?",
         [peticion.body.fecha, idPersona]
       );
 
