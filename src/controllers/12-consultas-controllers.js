@@ -180,3 +180,27 @@ export const consultaMovimientos = async (peticion, respuesta) => {
     });
   }
 };
+
+export const consultaMontoTotalMovimientos = async (peticion, respuesta) =>{
+  try {
+    console.log("Realizando consulta monto total movimientos");
+    const objetoConexion = await conexion();
+    const idPersona = parseInt(peticion.body.idSession);
+    const [egresos] = await objetoConexion.query("SELECT round(SUM(monto),2) AS totalEgresos FROM registros_egresos WHERE (MONTH(fecha) = MONTH(?)) AND persona_idPersona = ?",
+                      [peticion.body.fecha, idPersona]
+    );
+    const [ingresos] = await objetoConexion.query("SELECT round(SUM(monto),2) AS totalIngresos FROM registros_ingresos WHERE (MONTH(fecha) = MONTH(?)) AND persona_idPersona = ?",
+                      [peticion.body.fecha, idPersona]
+    );
+    const saldo = (ingresos[0].totalIngresos - egresos[0].totalEgresos).toFixed(2);
+    const ahorro = ((saldo / 100) * 10 ).toFixed(2);
+    respuesta.json({"totalEgresos":egresos[0].totalEgresos, "totalIngresos":ingresos[0].totalIngresos, "saldo":saldo, "ahorro":ahorro});
+  } catch (e) {
+    console.log(
+      "Error durante la consulta de totales de ingresos\n" + e.message
+    );
+    respuesta.json({
+      "Error durante la consulta de totales de ingresos": e.message,
+    });
+  }
+}

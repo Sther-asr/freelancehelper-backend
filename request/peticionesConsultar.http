@@ -143,3 +143,13 @@ Content-Type: application/json
     "fechaFin" : "2022-06-27",
     "tipo": "Rango"
 }
+
+### Consulta monto total movimientos ingresos/egresos
+POST {{api}}/consultas/consultaMontoTotalMovimientos
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSession": 4,
+    "fecha":"2022-06-10"
+}
