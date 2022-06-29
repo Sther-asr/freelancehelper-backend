@@ -54,23 +54,37 @@ export const registraPersona = async(peticion, respuesta)=>{
 
 export const consultaDatosPersona = async (peticion, respuesta)=>{
     try {
-        const idPersona = parseInt(peticion.body.idSesion);
+        const idPersona = parseInt(peticion.body.idSession);
         console.log('Realizando consulta datos persona');
         const objetoConexion = await conexion();
         const [resultado] = await objetoConexion.query("SELECT * FROM persona WHERE idPersona = ?",[idPersona]);
-        console.log(resultado);
-        respuesta.json(resultado);
+        console.log(resultado[0]);
+        respuesta.json(resultado[0]);
+
     } catch (e) {
         console.log('Error durante la consulta\n'+e.message);
         respuesta.json({"Error durante la consulta":e.message});
     }
 }
+export const consultaAllDatosPersona = async (peticion, respuesta)=>{
+    try {
+        const idPersona = parseInt(peticion.body.idSession);
+        console.log('Realizando consulta datos persona');
+        const objetoConexion = await conexion();
+        const [resultado] = await objetoConexion.query("SELECT p.*, u.usuario, u.correo FROM persona p JOIN usuario u ON p.idPersona = u.persona_idPersona WHERE idPersona = ?",[idPersona]);
+        console.log(resultado[0]);
+        respuesta.json(resultado[0]);
 
+    } catch (e) {
+        console.log('Error durante la consulta\n'+e.message);
+        respuesta.json({"Error durante la consulta":e.message});
+    }
+}
 export const actualizarPersona = async (peticion, respuesta)=> {
     try{
         console.log('Ejecutando actualizacion');
         const objetoConexion = await conexion();
-        const idPersona = parseInt(peticion.body.idSesion);
+        const idPersona = parseInt(peticion.body.idSession);
         const [resultado] = await objetoConexion.query(
             "UPDATE persona SET  nombrePersona = ?, apellidoPersona = ?, fechaNacimiento = ? WHERE idPersona = ?",
             [peticion.body.nombrePersona, peticion.body.apellidoPersona, peticion.body.sexo, peticion.body.fechaNacimiento, idPersona]
@@ -93,7 +107,7 @@ export const elimiarPersona = async (peticion, respuesta)=>{
         }
         console.log('Ejecutando eliminacion');
         const objetoConexion = await conexion();
-        const idPersona = parseInt(peticion.body.idSesion);
+        const idPersona = parseInt(peticion.body.idSession);
         const [resultado] = await objetoConexion.query(
             "DELETE FROM persona WHERE idPersona = ?",
             [idPersona]  
@@ -110,7 +124,7 @@ export const listaDiaria = async(peticion, respuesta)=>{
     try {
         console.log('Ejecutando lista diaria');
         const objetoConexion = await conexion();
-        const idPersona = parseInt(peticion.body.idSesion);
+        const idPersona = parseInt(peticion.body.idSession);
         
     } catch (e) {
         
