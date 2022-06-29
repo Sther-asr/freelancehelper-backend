@@ -9,8 +9,8 @@ const path = 'proyectos';
 /**
  * Rutas
  */
-router.post(`/registro`, sesionExistente, datosCorrectos, registraProyecto);
-router.get(`/consulta`, sesionExistente, consultaProyecto);
+router.post(`/registro`, sesionExistente, registraProyecto);
+router.post(`/consulta`, sesionExistente, consultaProyecto);
 router.put(`/actualizar`, sesionExistente, actualizarProyecto);
 router.delete(`/eliminar`, sesionExistente, eliminarProyecto);
 
