@@ -70,19 +70,18 @@ export const consultaDatosUsuario = async(peticion, respuesta)=>{
 }
 export const actualizarUsuario = async (peticion, respuesta)=> {
     try{
-        console.log('Ejecutando actualizacion');
+        console.log('Ejecutando actualizacion del usuario');
         const objetoConexion = await conexion();
         const idPersona = parseInt(peticion.body.idSession);
-        const contrasenaMD5 = md5(peticion.body.contrasena);
         const [resultado] = await objetoConexion.query(
-            "UPDATE usuario SET usuario = ?, contrasena = ?, correo = ? WHERE persona_idPersona = ?",
-            [peticion.body.usuario, contrasenaMD5, peticion.body.correo, idPersona]
+            "UPDATE usuario SET usuario = ?, correo = ? WHERE persona_idPersona = ?",
+            [peticion.body.usuario, peticion.body.correo, idPersona]
         );
         console.log(resultado);
         respuesta.json(resultado);
     }catch (e) {
-        console.log('Error al actualizar\n'+e.message);
-        respuesta.json({"Error durante la actualizacion": e.message});
+        console.log('Error al actualizar usuario\n'+e.message);
+        respuesta.json({"Error durante la actualizacion del usuario": e.message});
     }
 }
 

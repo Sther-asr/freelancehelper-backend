@@ -161,3 +161,15 @@ Content-Type: application/json
     "tipo": "Recordatorio",
     "estado": "Activo"
 }
+
+### Actualizar perfil 
+POST {{api}}/consultas/actualizar/perfil
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSession": 10,
+    "nombrePersona": "Petra",
+    "usuario": "juan",
+    "correo": "petraperez@hotmail.com"
+}

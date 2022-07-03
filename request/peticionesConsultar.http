@@ -56,7 +56,7 @@ Content-Type: application/json
 }
 
 ### consulta proyecto
-GET {{api}}/proyectos/consulta
+POST {{api}}/proyectos/consulta
 Content-Type: application/json
 
 {
