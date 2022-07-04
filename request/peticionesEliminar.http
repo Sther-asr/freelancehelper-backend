@@ -1,4 +1,4 @@
-@api = http://localhost:2000/handle
+@api = http://localhost:2000
 
 ###
 DELETE {{api}}/eliminar-persona
@@ -72,13 +72,13 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/eliminar-proyecto
+DELETE {{api}}/proyectos/eliminar
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": 1,
-    "idProyecto": 9
+    "idSesion": "7",
+    "idProyecto": "5"
 }
 
 ###
