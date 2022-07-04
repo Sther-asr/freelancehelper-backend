@@ -14,7 +14,7 @@ router.post(`/consulta-inicio-sesion`, consultaDatosSesionInicio);
 router.post(`/consulta/id`, sesionExistente, consultaDatosUsuario);
 router.put(`/actualizar`, datosCorrectos, sesionExistente,
  actualizarUsuario);
-router.post(`/actualizar-contrasena`, sesionExistente, actualizarContrasenaUsuario);
+router.post(`/actualizar-contrasena`, actualizarContrasenaUsuario);
 router.delete(`/eliminar`, sesionExistente, eliminarUsuario);
 
 

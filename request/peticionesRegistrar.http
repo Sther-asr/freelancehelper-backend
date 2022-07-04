@@ -22,7 +22,7 @@ Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": 3,
+    "idSesion": 10,
     "descripcion":"App Movil",
     "monto":"5000",
     "fechaInicio":"2022-03-12", 
@@ -56,12 +56,12 @@ Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": 1,
+    "idSesion": 10,
     "descripcion":"Mostrar la app",
     "fechaInicio":"2022-09-15", 
     "fechaFin":"2022-09-25",
     "estado":"1",
-    "proyecto_idProyecto" :"2"
+    "proyecto_idProyecto" :"3"
 }
 
 ###registrar nota
@@ -127,13 +127,4 @@ Content-Type: application/json
     "persona_idPersona" : "3"
 }
 
-###registrar proyecto ingreso
-POST {{api}}/consultas/registrar/ingresoProyecto
-Content-Type: application/json
 
-{
-    "sesion":true,
-    "idSession": 2,
-    "idProyecto":2,
-    "fecha":"2022-07-04"
-}

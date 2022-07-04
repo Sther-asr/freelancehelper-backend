@@ -131,7 +131,6 @@ export const listaDiaria = async(peticion, respuesta)=>{
     }
 }
 
-
 /**
  * 
 SELECT

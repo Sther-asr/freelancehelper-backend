@@ -56,7 +56,7 @@ Content-Type: application/json
 }
 
 ### consulta proyecto
-GET {{api}}/proyectos/consulta
+POST {{api}}/proyectos/consulta
 Content-Type: application/json
 
 {
@@ -74,14 +74,12 @@ Content-Type: application/json
 }
 
 ### consulta recordatorio  // si se agregan solo dos datos, la consulta trae todos los recordatorios
-GET {{api}}/recordatorio/consulta
+POST {{api}}/recordatorios/consulta
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion" : "1",
-    "rangoInicio" : "2022-8-19",
-    "rangoFin": "2022-11-30"
+    "idSesion" : "10"
 }
 
 ### consulta recordatorio-tag
@@ -103,12 +101,13 @@ Content-Type: application/json
 }
 
 ### consulta actividad
-GET {{api}}/actividades/consulta
+POST {{api}}/actividades/consulta
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idProyecto" : "8"
+    "idSesion" : 10,
+    "idProyecto" : "3"
 }
 
 ### consulta nota
