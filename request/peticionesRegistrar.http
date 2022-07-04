@@ -127,4 +127,13 @@ Content-Type: application/json
     "persona_idPersona" : "3"
 }
 
+###registrar proyecto ingreso
+POST {{api}}/consultas/registrar/ingresoProyecto
+Content-Type: application/json
 
+{
+    "sesion":true,
+    "idSession": 2,
+    "idProyecto":2,
+    "fecha":"2022-07-04"
+}
