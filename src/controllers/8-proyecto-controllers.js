@@ -38,7 +38,7 @@ export const consultaProyecto = async (peticion, respuesta) => {
     const objetoConexion = await conexion();
     const idPersona = parseInt(peticion.body.idSesion);
     const [resultado] = await objetoConexion.query(
-      "SELECT proyecto.idProyecto, proyecto.descripcion, proyecto.monto, proyecto.fechaInicio, proyecto.fechaFin, proyecto.estado FROM proyecto INNER JOIN persona ON persona.idPersona = proyecto.persona_idPersona AND persona.idPersona = ?",
+      "SELECT proyecto.idProyecto, proyecto.descripcion, proyecto.monto, proyecto.fechaInicio, proyecto.fechaFin, proyecto.estado, proyecto.persona_idPersona FROM proyecto WHERE proyecto.persona_idPersona = ? ORDER BY proyecto.fechaFin ASC",
       [idPersona]
     );
 

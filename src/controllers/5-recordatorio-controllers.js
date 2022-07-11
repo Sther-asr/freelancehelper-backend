@@ -37,7 +37,7 @@ export const consultaRecordatorio = async (peticion, respuesta) => {
     console.log("Realizando consulta recordatorio");
     const objetoConexion = await conexion();
     const [resultado] = await objetoConexion.query(
-      "SELECT * FROM recordatorio WHERE persona_idPersona = ?",
+      "SELECT * FROM recordatorio WHERE persona_idPersona = ? ORDER BY fechaFin ASC",
       [idPersona]
     );
     console.log(resultado);
