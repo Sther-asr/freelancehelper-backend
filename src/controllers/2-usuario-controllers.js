@@ -90,10 +90,16 @@ export const actualizarContrasenaUsuario = async (peticion, respuesta)=> {
         console.log('Ejecutando actualizacion');
         const objetoConexion = await conexion();
         const contrasenaMD5 = md5(peticion.body.contrasena);
+        const idPersona = parseInt(peticion.body.idSession);
         const [resultado] = await objetoConexion.query(
-            "UPDATE usuario SET contrasena = ? WHERE correo = ?",
-            [contrasenaMD5, peticion.body.correo]
+            "UPDATE usuario SET contrasena = ? WHERE correo = ? AND persona_idPersona = ?",
+            [contrasenaMD5, peticion.body.correo, idPersona]
         );
+        if(resultado.affectedRows ===0 ){
+            console.log(resultado);
+            respuesta.json({"actualizacion": false, resultado});
+            return;
+        }
         console.log(resultado);
         respuesta.json({"actualizacion": true, resultado});
     }catch (e) {

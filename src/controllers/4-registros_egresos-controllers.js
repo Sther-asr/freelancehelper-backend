@@ -23,6 +23,40 @@ export const registraEgreso = async(peticion, respuesta)=>{
     }
 }
 
+export const consultaSaldo = async(peticion, respuesta, next)=>{
+    try {
+        console.log('Consultando saldo');
+        const objetoConexion = await conexion();
+        const [resultado] = await objetoConexion.query(
+            'SELECT (SUM(monto)-(SELECT SUM(monto)  FROM registros_egresos WHERE persona_idPersona = ?)) AS saldo FROM registros_ingresos WHERE persona_idPersona = ?',
+            [peticion.body.persona_idPersona, peticion.body.persona_idPersona]
+        );
+        if(resultado[0].saldo === null){
+            console.log("El saldo es null");
+            const mensaje = `El saldo es insuficiente ${resultado[0].saldo}`;
+            respuesta.json({registro: false, "resultado":mensaje});
+            return;
+        }
+        if(resultado[0].saldo <= 0){
+            console.log("Saldo insuficiente");
+            const mensaje = `El saldo es insuficiente ${resultado[0].saldo}`;
+            respuesta.json({registro: false, "resultado":mensaje});
+            return;
+        }
+        if((resultado[0].saldo - peticion.body.monto) < 0){
+            console.log("Saldo insuficiente ingrese un egreso menor");
+            const mensaje = `El saldo es insuficiente ${resultado[0].saldo}`;
+            respuesta.json({registro: false, "resultado":mensaje});
+            return;
+        }
+        next();
+        
+    } catch (e) {
+       console.log('Error durante consulta de saldo\n'+e.message);
+       respuesta.json({"tipo de Error":e.message});
+    }
+}
+
 export const consultaEgresos = async (peticion, respuesta)=>{
     try {
         let resultado = [];

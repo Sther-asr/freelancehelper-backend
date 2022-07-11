@@ -42,11 +42,12 @@ export const consultaActividad = async (peticion, respuesta)=>{
 
 export const actualizarActividad = async (peticion, respuesta)=> {
     try{
-        console.log('Ejecutando actualizacion de la actividad');
+        console.log(peticion.body);
         const objetoConexion = await conexion();
+        const idProyecto = parseInt((peticion.body.idProyecto === undefined ? peticion.body.proyecto_idProyecto : peticion.body.idProyecto));
         const [resultado] = await objetoConexion.query(
             "UPDATE actividad SET descripcion=?, fechaInicio=?, fechaFin=?, estado=? WHERE proyecto_idProyecto =? AND idActividad=?",
-            [peticion.body.descripcion, peticion.body.fechaInicio, peticion.body.fechaFin, peticion.body.estado, peticion.body.proyecto_idProyecto, peticion.body.idActividad]
+            [peticion.body.descripcion, peticion.body.fechaInicio, peticion.body.fechaFin, peticion.body.estado, idProyecto, peticion.body.idActividad]
         );
         if(resultado.affectedRows === 0) {
             console.log(resultado);
