@@ -1,4 +1,4 @@
-@api = http://localhost:2000/handle
+@api = http://localhost:2000
 
 ###
 DELETE {{api}}/eliminar-persona
@@ -41,13 +41,13 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/eliminar-recordatorio
+DELETE {{api}}/recordatorios/eliminar
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": 18,
-    "idRecordatorio": 5
+    "idSesion": 7,
+    "idRecordatorio": 6
 }
 
 ###
@@ -72,13 +72,13 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/eliminar-proyecto
+DELETE {{api}}/proyectos/eliminar
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": 1,
-    "idProyecto": 9
+    "idSesion": "7",
+    "idProyecto": "5"
 }
 
 ###
@@ -93,7 +93,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/eliminar-actividad
+DELETE {{api}}/actividades/eliminar
 Content-Type: application/json
 
 {

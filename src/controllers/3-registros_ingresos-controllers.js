@@ -89,32 +89,6 @@ export const consultaIngresosRango = async (peticion, respuesta) => {
   }
 };
 
-export const consultaIngreso = async (peticion, respuesta, next) => {
-  try {
-    console.log("Realizando consulta de ingreso");
-    const objetoConexion = await conexion();
-    const idPersona = parseInt(peticion.body.idSession);
-    const [resultado] = await objetoConexion.query(
-      "SELECT COUNT(*) AS ingresoIgual FROM registros_ingresos WHERE proyecto_idProyecto = ? AND persona_idPersona = ?",
-      [peticion.body.idProyecto, idPersona]
-    );
-    if(resultado[0].ingresoIgual === 0){
-      console.log("No hay ingresos similares");
-      next();
-      return;
-    }
-    console.log("Hay ingresos ya registrado con este proyecto"+ resultado[0]);
-    respuesta.json({"resultado":false, "ingresoIdentico":resultado[0].ingresoIgual});
-  } catch (e) {
-    console.log(
-      "Error durante la consulta de registros de ingresos identicos\n" + e.message
-    );
-    respuesta.json({
-      "Error durante la consulta de registros de ingresos identicos": e.message,
-    });
-  }
-};
-
 export const actualizarIngreso = async (peticion, respuesta) => {
   try {
     console.log("Ejecutando actualizacion");

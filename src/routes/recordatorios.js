@@ -10,7 +10,7 @@ const path = 'recordatorios';
  * Rutas
  */
 router.post(`/registro`, sesionExistente, registraRecordatorio);
-router.get(`/consulta`, sesionExistente, consultaRecordatorio);
+router.post(`/consulta`, sesionExistente, consultaRecordatorio);
 router.put(`/actualizar`, sesionExistente, actualizarRecordatorio);
 router.delete(`/eliminar`, sesionExistente, eliminarRecordatorio);
 

@@ -10,7 +10,7 @@ const path = 'actividades';
  * Rutas
  */
 router.post(`/registro`, sesionExistente, registraActividad);
-router.get(`/consulta`, sesionExistente, consultaActividad);
+router.post(`/consulta`, sesionExistente, consultaActividad);
 router.put(`/actualizar`, sesionExistente, actualizarActividad);
 router.delete(`/eliminar`, sesionExistente, eliminarActividad);
 

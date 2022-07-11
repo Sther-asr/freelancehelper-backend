@@ -97,18 +97,20 @@ Content-Type: application/json
 }
 
 ###
-PUT {{api}}/actualizar-proyecto
+PUT {{api}}/proyectos/actualizar
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": "18",
+    "idSesion": "3",
     "descripcion":"Nuevo motivo para proyecto",
     "monto":3000,
     "fechaInicio":"2020-10-13",
     "fechaFin":"2020-10-13",
-    "estado": "abandonado",
-    "idProyecto":"9"
+    "estado": "Abandonado",
+    "idProyecto":"6",
+    "idRecordatorio": "8",
+    "idActividad" : ""
 }
 
 ###
@@ -124,12 +126,12 @@ Content-Type: application/json
 }
 
 ###
-PUT {{api}}/actualizar-actividad
+PUT {{api}}/actividades/actualizar
 Content-Type: application/json
 
 {
     "sesion": true,
-    "idSesion": "18",
+    "idSesion": "10",
     "descripcion":"Nuevo motivo para Actividad",
     "fechaInicio":"2020-10-13",
     "fechaFin":"2020-10-13",
@@ -139,7 +141,7 @@ Content-Type: application/json
 }
 
 ###
-PUT {{api}}/actualizar-nota
+PUT {{api}}/notas/actualizar
 Content-Type: application/json
 
 {
@@ -160,4 +162,16 @@ Content-Type: application/json
     "id": "24",
     "tipo": "Recordatorio",
     "estado": "Activo"
+}
+
+### Actualizar perfil 
+POST {{api}}/consultas/actualizar/perfil
+Content-Type: application/json
+
+{
+    "sesion": true,
+    "idSession": 10,
+    "nombrePersona": "Petra",
+    "usuario": "juan",
+    "correo": "petraperez@hotmail.com"
 }
