@@ -29,7 +29,7 @@ export const consultaActividad = async (peticion, respuesta)=>{
         const idProyecto = parseInt(peticion.body.idProyecto);
         const objetoConexion = await conexion();
         const [resultado] = await objetoConexion.query(
-            "SELECT * FROM actividad WHERE proyecto_idProyecto = ?"
+            "SELECT * FROM actividad WHERE proyecto_idProyecto = ? ORDER BY fechaFin ASC"
             ,[idProyecto]    
         );
         console.log(resultado);
